@@ -1,0 +1,20 @@
+# datasets
+data/*
+!data/.gitkeep
+
+# checkpoints / models
+models/*
+!models/.gitkeep
+*.pt
+*.pth
+*.ckpt
+
+# secrets
+.env
+
+# python
+__pycache__/
+.venv/
+
+# experiment tracking
+mlruns/
