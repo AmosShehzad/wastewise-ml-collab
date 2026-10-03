@@ -24,3 +24,4 @@ __pycache__/
 # experiment tracking
 mlruns/
 '@ | Set-Content .gitignore
+/metrics.json

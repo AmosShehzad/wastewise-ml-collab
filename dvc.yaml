@@ -1,0 +1,51 @@
+stages:
+
+  prepare:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/prepare.py
+    deps:
+      - src/wastewise_ml_collab/pipeline/prepare.py
+      - data/raw/garbage-dataset
+    params:
+      - seed
+      - data.raw_dir
+      - data.processed_dir
+      - split.test_size
+      - split.val_size
+    outs:
+      - data/processed/train.csv
+      - data/processed/val.csv
+      - data/processed/test.csv
+
+  train:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/train.py
+    deps:
+      - src/wastewise_ml_collab/pipeline/train.py
+      - data/processed/train.csv
+    params:
+      - seed
+      - data.processed_dir
+      - train.model
+      - train.image_size
+      - train.batch_size
+      - train.epochs
+      - train.learning_rate
+      - train.num_workers
+      - train.pretrained
+      - train.optimizer
+    outs:
+      - models/model.pth
+
+  evaluate:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/evaluate.py
+    deps:
+      - src/wastewise_ml_collab/pipeline/evaluate.py
+      - data/processed/test.csv
+      - models/model.pth
+    params:
+      - seed
+      - data.processed_dir
+      - train.image_size
+      - train.batch_size
+      - train.num_workers
+    metrics:
+      - metrics.json
