@@ -1,0 +1,19 @@
+seed: 42
+
+data:
+  raw_dir: data/raw/garbage-dataset
+  processed_dir: data/processed
+
+split:
+  test_size: 0.20
+  val_size: 0.10
+
+train:
+  model: mobilenet_v2
+  image_size: 128
+  batch_size: 8
+  epochs: 2
+  learning_rate: 0.001
+  num_workers: 0
+  pretrained: true
+  optimizer: adam
