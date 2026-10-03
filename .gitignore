@@ -1,6 +1,8 @@
 # datasets
 data/*
 !data/.gitkeep
+!data/raw/
+!data/raw/*.dvc
 
 # checkpoints / models
 models/*
