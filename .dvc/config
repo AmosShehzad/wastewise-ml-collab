@@ -1,8 +1,6 @@
 [core]
-    remote = origin
-['remote "origin"']
-    url = s3://dvc
-    endpointurl = https://dagshub.com/AmosShehzad/wastewise-ml-collab.s3
-['remote "default"']
+    remote = storage
+
+[remote "storage"]
     url = s3://dvc
     endpointurl = https://dagshub.com/AmosShehzad/wastewise-ml-collab.s3
