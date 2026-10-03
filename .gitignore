@@ -1,6 +1,11 @@
+@'
 # datasets
 data/*
 !data/.gitkeep
+!data/raw/
+!data/raw/*.dvc
+data/raw/*/
+!data/raw/*.dvc
 
 # checkpoints / models
 models/*
@@ -18,3 +23,4 @@ __pycache__/
 
 # experiment tracking
 mlruns/
+'@ | Set-Content .gitignore
