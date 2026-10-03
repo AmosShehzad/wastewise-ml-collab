@@ -1,0 +1,6 @@
+outs:
+- md5: 0c2c9899ad73a52dfa5971d7af616108.dir
+  size: 223055959
+  nfiles: 12259
+  hash: md5
+  path: garbage-dataset

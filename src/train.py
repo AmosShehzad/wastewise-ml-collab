@@ -6,6 +6,7 @@ https://www.kaggle.com/code/sumn2u/garbage-classification-resnet
 Run from the repo root:
     uv run python src/train.py --data-dir data/raw/<folder-with-class-folders>
 """
+
 import argparse
 from pathlib import Path
 
@@ -22,9 +23,15 @@ ROOT = Path(__file__).resolve().parents[1]  # repo root, so no absolute paths
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train a ResNet50 garbage classifier")
-    parser.add_argument("--data-dir", type=Path, default=ROOT / "data" / "raw",
-                        help="folder that contains one sub-folder per class")
-    parser.add_argument("--output", type=Path, default=ROOT / "models" / "final_model.pt")
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=ROOT / "data" / "raw",
+        help="folder that contains one sub-folder per class",
+    )
+    parser.add_argument(
+        "--output", type=Path, default=ROOT / "models" / "final_model.pt"
+    )
     parser.add_argument("--epochs", type=int, default=8)
     parser.add_argument("--lr", type=float, default=5.5e-5)
     parser.add_argument("--batch-size", type=int, default=32)
@@ -144,10 +151,16 @@ def main():
     print(len(train_ds), len(test_ds), len(val_ds))
 
     device = get_default_device()
-    train_dl = DataLoader(train_ds, args.batch_size, shuffle=True,
-                          num_workers=args.num_workers, pin_memory=True)
-    val_dl = DataLoader(val_ds, args.batch_size * 2,
-                        num_workers=args.num_workers, pin_memory=True)
+    train_dl = DataLoader(
+        train_ds,
+        args.batch_size,
+        shuffle=True,
+        num_workers=args.num_workers,
+        pin_memory=True,
+    )
+    val_dl = DataLoader(
+        val_ds, args.batch_size * 2, num_workers=args.num_workers, pin_memory=True
+    )
     train_dl = DeviceDataLoader(train_dl, device)
     val_dl = DeviceDataLoader(val_dl, device)
 
