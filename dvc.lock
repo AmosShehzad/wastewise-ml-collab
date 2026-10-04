@@ -41,13 +41,13 @@ stages:
       size: 484894
     - path: src/wastewise_ml_collab/pipeline/train.py
       hash: md5
-      md5: a6b7b9f13329ccfb5b52a2604eb94867
-      size: 4292
+      md5: b408798b29b910405afa9057e1f153e7
+      size: 4253
     params:
       params.yaml:
         data.processed_dir: data/processed
         seed: 42
-        train.batch_size: 8
+        train.batch_size: 4
         train.epochs: 2
         train.image_size: 128
         train.learning_rate: 0.001
@@ -58,7 +58,7 @@ stages:
     outs:
     - path: models/model.pth
       hash: md5
-      md5: 29b7cfe7b80a121fb5bb3905917f451c
+      md5: b4a2f9b488bef934f0c9abfabf966694
       size: 9170379
   evaluate:
     cmd: uv run python src/wastewise_ml_collab/pipeline/evaluate.py
@@ -69,21 +69,21 @@ stages:
       size: 138563
     - path: models/model.pth
       hash: md5
-      md5: 29b7cfe7b80a121fb5bb3905917f451c
+      md5: b4a2f9b488bef934f0c9abfabf966694
       size: 9170379
     - path: src/wastewise_ml_collab/pipeline/evaluate.py
       hash: md5
-      md5: d842fcdac363c3bfb274f8abae3b7423
-      size: 3656
+      md5: 47050bffb23a50738ed1d4ff46af2a55
+      size: 3581
     params:
       params.yaml:
         data.processed_dir: data/processed
         seed: 42
-        train.batch_size: 8
+        train.batch_size: 4
         train.image_size: 128
         train.num_workers: 0
     outs:
     - path: metrics.json
       hash: md5
-      md5: caece56d250c702fb5802011e65b414f
+      md5: 3cf309ff18595de5c454e021f524fcd4
       size: 116
