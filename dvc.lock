@@ -1,0 +1,89 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/prepare.py
+    deps:
+    - path: data/raw/garbage-dataset
+      hash: md5
+      md5: 0c2c9899ad73a52dfa5971d7af616108.dir
+      size: 223055959
+      nfiles: 12259
+    - path: src/wastewise_ml_collab/pipeline/prepare.py
+      hash: md5
+      md5: 5015be93601463580ed322ed838060ed
+      size: 2136
+    params:
+      params.yaml:
+        data.processed_dir: data/processed
+        data.raw_dir: data/raw/garbage-dataset
+        seed: 42
+        split.test_size: 0.2
+        split.val_size: 0.1
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 94a761ca5ad10f9a474f0f3f8aa51cc2
+      size: 138563
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 28266c6519f74a3b483e29b242ac3d65
+      size: 484894
+    - path: data/processed/val.csv
+      hash: md5
+      md5: 2d1238c3292b374df1e150f1315d8486
+      size: 69282
+  train:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/train.py
+    deps:
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 28266c6519f74a3b483e29b242ac3d65
+      size: 484894
+    - path: src/wastewise_ml_collab/pipeline/train.py
+      hash: md5
+      md5: a6b7b9f13329ccfb5b52a2604eb94867
+      size: 4292
+    params:
+      params.yaml:
+        data.processed_dir: data/processed
+        seed: 42
+        train.batch_size: 8
+        train.epochs: 2
+        train.image_size: 128
+        train.learning_rate: 0.001
+        train.model: mobilenet_v2
+        train.num_workers: 0
+        train.optimizer: adam
+        train.pretrained: true
+    outs:
+    - path: models/model.pth
+      hash: md5
+      md5: 29b7cfe7b80a121fb5bb3905917f451c
+      size: 9170379
+  evaluate:
+    cmd: uv run python src/wastewise_ml_collab/pipeline/evaluate.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 94a761ca5ad10f9a474f0f3f8aa51cc2
+      size: 138563
+    - path: models/model.pth
+      hash: md5
+      md5: 29b7cfe7b80a121fb5bb3905917f451c
+      size: 9170379
+    - path: src/wastewise_ml_collab/pipeline/evaluate.py
+      hash: md5
+      md5: d842fcdac363c3bfb274f8abae3b7423
+      size: 3656
+    params:
+      params.yaml:
+        data.processed_dir: data/processed
+        seed: 42
+        train.batch_size: 8
+        train.image_size: 128
+        train.num_workers: 0
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: caece56d250c702fb5802011e65b414f
+      size: 116
